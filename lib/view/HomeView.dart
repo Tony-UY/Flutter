@@ -44,7 +44,7 @@ class HomePage extends StatelessWidget {
                 onTap: () {
                   Navigator.pushReplacementNamed(context, '/');
                 },
-                child: Image.asset('assets/logo.png', height: 40),
+                child: Image.asset('assets/logo.jpg', height: 40),
               ),
               const SizedBox(width: 10),
               const Text(appTitle),
