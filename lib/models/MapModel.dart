@@ -9,7 +9,7 @@ class MapModel {
   List<List<CaseModel>> _cases = List<List<CaseModel>>.empty();
 
 
-  MapModel(this.nbLine, this.nbCol, this.nbBomb, this._cases);
+  MapModel(this.nbLine, this.nbCol, this.nbBomb);
 
   void initCases() {
     _cases = List<List<CaseModel>>.generate(
@@ -71,8 +71,8 @@ class MapModel {
     initNumbers();
   }
 
-  void reveal(CaseModel maCase) {
-    maCase.hidden == false;
+  void reveal(int x, int y) {
+    _cases[x][y].hidden == false;
   }
 
   void revealAll() {
@@ -83,17 +83,19 @@ class MapModel {
     }
   }
 
-  void explode(CaseModel maCase) {
-    maCase.hasExploded == true;
+  void explode(int x, int y) {
+    _cases[x][y].hasExploded == true;
   }
-  void toggleFlag(CaseModel maCase){
-    if(maCase.hasFlag == false){
-      maCase.hasFlag == true;
+  void toggleFlag(int x, int y){
+    if(_cases[x][y].hasFlag == false){
+      _cases[x][y].hasFlag == true;
     }
     else {
-      maCase.hasFlag = false;
+      _cases[x][y].hasFlag = false;
     }
   }
+
+  List<List<CaseModel>> get cases => _cases;
 }
 
 
