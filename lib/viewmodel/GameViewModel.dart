@@ -4,27 +4,36 @@ import 'package:tp3/models/MapModel.dart';
 
 class GameViewModel extends ChangeNotifier {
   MapModel easyMap = MapModel(10, 18, 10);
+  bool _isMapGenerated = false;
 
   void generateMap() {
-    easyMap.generateMap();  // Initialise la carte avec les bombes et les nombres
+    if (!_isMapGenerated) {
+      easyMap.generateMap();
+      _isMapGenerated = true;
+      notifyListeners();
+    }
+  }
+
+  void resetGame() {
+    easyMap = MapModel(10, 18, 10);
+    _isMapGenerated = false;
+    generateMap();
     notifyListeners();
   }
 
   void click(int ligne, int colonne) {
-    if (easyMap.cases[ligne][colonne].hasFlag == false) {
-      easyMap.reveal(ligne, colonne);  // Révèle la case
+    if (!easyMap.cases[ligne][colonne].hasFlag) {
+      easyMap.reveal(ligne, colonne);
       if (easyMap.cases[ligne][colonne].hasBomb) {
-        easyMap.explode(ligne, colonne);  // Si c'est une bombe, l'explosion se déclenche
-        easyMap.revealAll();  // Révèle toutes les cases
-
+        easyMap.explode(ligne, colonne);
+        easyMap.revealAll();
       }
       notifyListeners();
-
     }
   }
 
   void onLongPress(int ligne, int colonne) {
-    easyMap.toggleFlag(ligne, colonne);  // Bascule entre mettre/découper le drapeau
+    easyMap.toggleFlag(ligne, colonne);
     notifyListeners();
   }
 
@@ -32,19 +41,15 @@ class GameViewModel extends ChangeNotifier {
     int condition;
 
     if (easyMap.cases[ligne][colonne].hidden){
-      condition=12;
-    }
-    else if (easyMap.cases[ligne][colonne].hasFlag) {
-      condition = 9;  // Drapeau
-    }
-    else if (easyMap.cases[ligne][colonne].hasBomb) {
-      condition = 10;  // Bombe
-    }
-    else if (easyMap.cases[ligne][colonne].hasExploded) {
-      condition = 11;  // Explosion
-    }
-    else {
-      condition = easyMap.cases[ligne][colonne].number ?? 0;  // Nombre de bombes autour
+      condition = 12;
+    } else if (easyMap.cases[ligne][colonne].hasFlag) {
+      condition = 9;
+    } else if (easyMap.cases[ligne][colonne].hasBomb) {
+      condition = 10;
+    } else if (easyMap.cases[ligne][colonne].hasExploded) {
+      condition = 11;
+    } else {
+      condition = easyMap.cases[ligne][colonne].number ?? 0;
     }
 
     switch (condition) {

@@ -16,18 +16,32 @@ class GameView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Jeu de Démineur'),
       ),
-      body: Center(
-        child: Table(
-          border: TableBorder.all(),  // Ajouter des bordures entre les cellules
-          children: List.generate(gameViewModel.easyMap.nbLine, (y) {
-            return TableRow(
-              children: List.generate(gameViewModel.easyMap.nbCol, (x) {
-                // Pour chaque case, crée un MapButton
-                return MapButton(x: x, y: y);
-              }),
-            );
-          }),
-        ),
+      body: Column(
+        children: [
+          Expanded(
+            child: Center(
+              child: Table(
+                border: TableBorder.all(),
+                children: List.generate(gameViewModel.easyMap.nbLine, (y) {
+                  return TableRow(
+                    children: List.generate(gameViewModel.easyMap.nbCol, (x) {
+                      return MapButton(x: x, y: y);
+                    }),
+                  );
+                }),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ElevatedButton(
+              onPressed: () {
+                gameViewModel.resetGame();
+              },
+              child: const Text('Recommencer'),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -13,16 +13,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => GameViewModel(),
+      create: (context) {
+        final gameViewModel = GameViewModel();
+        gameViewModel.generateMap();
+        return gameViewModel;
+      },
       child: MaterialApp(
         title: 'Jeu de Démineur',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          useMaterial3: true, // Utilisation du design Material 3
-        ),
-        initialRoute: '/', // Route initiale de l'application
+        initialRoute: '/',
         routes: {
-          '/': (context) => const GameView(), // Affiche la vue principale du jeu
+          '/': (context) => const GameView(),
         },
       ),
     );
