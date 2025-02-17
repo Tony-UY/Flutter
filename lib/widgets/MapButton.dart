@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:tp3/viewmodel/GameViewModel.dart';
+import 'package:provider/provider.dart';
 
 class MapButton extends StatelessWidget {
   final int x;
@@ -18,9 +17,9 @@ class MapButton extends StatelessWidget {
     final gameViewModel = context.watch<GameViewModel>();
 
     return InkWell(
-      onTap: () => gameViewModel.click(x, y),
-      onLongPress: () => gameViewModel.onLongPress(x, y),
-      child: gameViewModel.getIcon(x, y),
+      onTap: () => gameViewModel.click(y, x),
+      onLongPress: () => gameViewModel.onLongPress(y, x),
+      child: gameViewModel.getIcon(y, x),
     );
   }
 }
